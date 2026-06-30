@@ -15,4 +15,15 @@
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
