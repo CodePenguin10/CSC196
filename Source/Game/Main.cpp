@@ -38,7 +38,7 @@ int main()
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set render draw color to black
         SDL_RenderClear(renderer); // Clear the renderer
 
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set render draw color to green
+        SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255); // Set render draw color to green
         SDL_RenderFillRect(renderer, &greenSquare); // Render the rectangle
 
         SDL_RenderPresent(renderer); // Render the screen
