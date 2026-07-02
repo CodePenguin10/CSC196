@@ -14,6 +14,9 @@
     <ClCompile Include="Engine.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -23,6 +26,9 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="framework.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
