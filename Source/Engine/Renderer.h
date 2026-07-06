@@ -10,8 +10,8 @@ namespace nu
 			bool Initialize(const char* name, int width, int height);
 			void Shutdown();
 
-			void SetColor(Uint8 r, Uint8 g, Uint8 b);
-			
+			void SetColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255);
+			void SetColor(float r, float g, float b, float a = 1.0f);
 			
 			void Clear();
 			void Present();
@@ -20,6 +20,7 @@ namespace nu
 			void DrawLine(float x1, float y1, float x2, float y2);
 			void DrawFillRect(float x, float y, float w, float h);
 			void DrawRect(float x, float y, float w, float h);
+
 
 		private:
 			SDL_Window* m_window = nullptr;

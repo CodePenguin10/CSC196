@@ -1,41 +1,51 @@
-#include "../Engine/Engine.h"
-#include "SDL3/SDL.h"
+#include "Engine.h"
 
 #include <iostream>
+#include <vector>
+
+using namespace nu;
 
 int main()
 {
-    nu::Renderer renderer;
-    renderer.Initialize("Game Engine", 1920, 1024);
+    // INITILALIZATION
+    Renderer renderer;
+    renderer.Initialize("Game Engine", 1280, 1024);
 
-    // Handles events
-    SDL_Event e;
+    //std::cout << sizeof(Vector2) << std::endl;
+    Vector2 vel{0.5f, 0.5f };
+
+    std::vector<Vector2> v;
+
+    // MAIN LOOP
     bool quit = false;
 
     while (!quit) 
     {
-        while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_EVENT_QUIT) {
+        // UPDATE
+        SDL_Event event;
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_EVENT_QUIT) {
                 quit = true;
             }
         }
 
+        // RENDER
+
          // Set render draw color to black
-        renderer.SetColor(0, 0, 0);
+        renderer.SetColor(0.0f, 0.0f, 0.0f);
 
         // Clear the renderer
 		renderer.Clear();
 
-		renderer.SetColor(0, 255, 255); // Set render draw color to cyan
+		renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat()); // Set render to random color
 		renderer.DrawFillRect(50,50,50,50); // Render the rectangle
 		renderer.DrawLine(100, 100, 200, 200); // Render the line
 
 		renderer.Present();
     }
 
+    // SHUTDOWN
 	renderer.Shutdown();
 
     return 0;
-
-	//fnEngine();
 }

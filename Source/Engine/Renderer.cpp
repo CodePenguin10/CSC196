@@ -34,9 +34,14 @@ namespace nu
         SDL_Quit();
     }
     
-    void Renderer::SetColor(Uint8 r, Uint8 g, Uint8 b)
+    void Renderer::SetColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
     {
-        SDL_SetRenderDrawColor(m_renderer, r, g, b, 255);
+        SDL_SetRenderDrawColor(m_renderer, r, g, b, a);
+    }
+
+    void Renderer::SetColor(float r, float g, float b, float a)
+    {
+        SDL_SetRenderDrawColorFloat(m_renderer, r, g, b, a);
     }
 
     void Renderer::Clear()
