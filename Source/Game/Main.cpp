@@ -37,9 +37,27 @@ int main()
         // Clear the renderer
 		renderer.Clear();
 
-		renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat()); // Set render to random color
-		renderer.DrawFillRect(50,50,50,50); // Render the rectangle
-		renderer.DrawLine(100, 100, 200, 200); // Render the line
+       for (int i = 0; i < 10; i++)
+        {
+            renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat());
+            renderer.DrawLine(RandomFloat(1280), RandomFloat(1040), RandomFloat(1280), RandomFloat(1040));
+        }
+
+        for (int i = 0; i < 20; i++)
+        {
+            renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat());
+			renderer.DrawPoint(RandomFloat(1280), RandomFloat(1040));
+		}
+
+        for (int i = 0; i < 10; i++) 
+        {
+			renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat());
+			renderer.DrawRect(RandomFloat(1280), RandomFloat(1040), (float)RandomInt(), (float)RandomInt());
+        }
+
+		//renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat()); // Set render to random color
+		//renderer.DrawFillRect(50,50,50,50); // Render the rectangle
+		//renderer.DrawLine(100, 100, 200, 200); // Render the line
 
 		renderer.Present();
     }

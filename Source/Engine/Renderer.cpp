@@ -73,6 +73,6 @@ namespace nu
     void Renderer::DrawRect(float x, float y, float w, float h)
     {
         SDL_FRect rect{ x, y, w, h };
-        SDL_RenderFillRect(m_renderer, &rect);
+        SDL_RenderRect(m_renderer, &rect);
     }
 }
