@@ -26,11 +26,17 @@ namespace nu
 		bool GetKeyPressed(int key) const { return !m_prevKeyStates[key] && m_keyStates[key]; }
 		bool GetKeyReleased(int key) const { return !m_prevKeyStates[key] && m_keyStates[key]; }
 
-		bool GetMouseDown(int button) const { return false; }
+		bool GetButtonDown(MouseButtons button) const { return m_buttonStates & GetButtonBit(button); }
+		bool GetPrevButtonDown(MouseButtons button) const { return m_prevButtonStates & GetButtonBit(button); }
+		bool GetButtonPressed(MouseButtons button) const { return !GetPrevButtonDown(button) && GetButtonDown(button); }
+		bool GetButtonReleased(MouseButtons button) const { return GetPrevButtonDown(button)  && !GetButtonDown(button); }
 
-		Vector2 GetMousePosition() { return m_mousePosition; }
+		Vector2 GetMousePosition() const { return m_mousePosition; }
+
+		
 
 	private:
+		uint32_t GetButtonBit(MouseButtons button) const;
 		// keyboard
 		std::vector<bool> m_keyStates;
 		std::vector<bool> m_prevKeyStates;

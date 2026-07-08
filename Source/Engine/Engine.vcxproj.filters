@@ -20,6 +20,9 @@
     <ClCompile Include="Input.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -41,6 +44,9 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>

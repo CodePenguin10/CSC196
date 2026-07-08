@@ -16,12 +16,12 @@ int main()
 
     input.Initialize();
 
-    //std::cout << sizeof(Vector2) << std::endl;
-    Vector2 vel{0.5f, 0.5f };
+    nu::Time time;
 
-    std::vector<Vector2> v;
+    Vector2 position{ 640.0f, 512.0f };
+    float speed = 500.0f;
 
-    Vector2 mousePosition{ 0, 0 };
+    std::vector<Vector2> points;
 
     // MAIN LOOP
     bool quit = false;
@@ -41,38 +41,33 @@ int main()
 
         // ENGINE
         input.Update();
+        time.Tick();
 
-        if (input.GetKeyPressed(SDL_SCANCODE_Q)) std::cout << "pressed\n";
-        if (input.GetKeyDown(SDL_SCANCODE_Q)) std::cout << "down\n";
-        if (input.GetKeyReleased(SDL_SCANCODE_Q)) std::cout << "released\n";
+        if (input.GetButtonDown(Input::MouseButtons::Left))
+        {
+			points.push_back(input.GetMousePosition());
+        }
+
+        Vector2 velocity{ 0.0f, 0.0f };
+		if (input.GetKeyDown(SDL_SCANCODE_A)) velocity.x = -speed;
+		if (input.GetKeyDown(SDL_SCANCODE_D)) velocity.x = +speed;
+		if (input.GetKeyDown(SDL_SCANCODE_W)) velocity.y = -speed;
+		if (input.GetKeyDown(SDL_SCANCODE_S)) velocity.y = +speed;
+        position += (velocity * time.GetDeltaTime());
 
         // RENDER
         renderer.SetColor(0.0f, 0.0f, 0.0f);
 		renderer.Clear();
 
-        renderer.SetColor(0.0f, 255.0f, 255.0f);
-		renderer.DrawFillRect(input.GetMousePosition().x - 20, input.GetMousePosition().y - 20, 40, 40);
+        for (size_t i = 0; i < points.size(); i++)
+        {
+			renderer.SetColor(0.0f, 255.0f, 255.0f);
+			renderer.DrawFillRect(points[i].x, points[i].y, 10, 10);
+        }
 
-        // Lines
-        for (int i = 0; i < 10; i++)
-        {
-            renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat());
-            renderer.DrawLine(RandomFloat(1280), RandomFloat(1040), RandomFloat(1280), RandomFloat(1040));
-        }
-        
-        // Points
-        for (int i = 0; i < 20; i++)
-        {
-            renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat());
-        	renderer.DrawPoint(RandomFloat(1280), RandomFloat(1040));
-}       
-        
-        //Squares (Unfilled)
-        for (int i = 0; i < 10; i++) 
-        {
-        	renderer.SetColor(RandomFloat(), RandomFloat(), RandomFloat());
-        	renderer.DrawRect(RandomFloat(1280), RandomFloat(1040), (float)RandomInt(), (float)RandomInt());
-        }
+        // CHARACTER
+        renderer.SetColor(0.0f, 255.0f, 255.0f);
+		renderer.DrawFillRect(position.x - 20, position.y - 20, 40, 40);
         
 	    renderer.Present();
     }
