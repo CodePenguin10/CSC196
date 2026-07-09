@@ -49,5 +49,8 @@
     <ClInclude Include="GameTime.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="MathUtility.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
