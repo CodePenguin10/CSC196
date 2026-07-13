@@ -17,7 +17,7 @@ namespace nu
 		float& operator [] (unsigned int i) { assert(i < 2); return (&x)[i]; }
 
 		bool operator == (const Vector2& v) const { return (this->x == v.x && this->y == v.y); }
-		bool operator == (const Vector2& v) const { return (this->x != v.x || this->y != v.y); }
+		bool operator != (const Vector2& v) const { return (this->x != v.x || this->y != v.y); }
 
 
 		Vector2 operator + (const Vector2& v) const { return Vector2{ this->x + v.x, this->y + v.y }; }
