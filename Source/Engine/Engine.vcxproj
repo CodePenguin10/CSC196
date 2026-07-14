@@ -145,11 +145,14 @@
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="MathUtility.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

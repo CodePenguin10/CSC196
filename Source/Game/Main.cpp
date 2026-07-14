@@ -6,8 +6,6 @@
 
 using namespace nu;
 
-
-
 int main()
 {
     // INITILALIZATION
@@ -20,7 +18,10 @@ int main()
 
     nu::Time time;
 
-    Actor player{ Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 50.0f } };
+    nu::Mesh mesh{ { Vector2{-3, 3}, Vector2{3,3}, Vector2{0,0} }, Color{ 0.0f, 255.0f, 255.0f} };
+
+
+    Actor player{ Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 50.0f }, std::vector<Mesh>{mesh} };
 
     Vector2 position{ 640.0f, 512.0f };
 	Vector2 velocity{ 0.0f, 0.0f };
@@ -88,10 +89,10 @@ int main()
         renderer.SetColor(0.0f, 0.0f, 0.0f);
 		renderer.Clear();
 
-        for (size_t i = 1; i < points.size(); i++)
+        for (size_t i = 0; i + 1 < points.size(); i++)
         {
 			renderer.SetColor(0.0f, 255.0f, 255.0f);
-			renderer.DrawLine(points[i].x, points[i].y, points[i - 1].x, points[i - 1].y);
+			renderer.DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
         }
 
         // CHARACTER

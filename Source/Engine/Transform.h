@@ -1,5 +1,6 @@
 #pragma once
 #include "Vector2.h"
+#include "Vector3.h"
 
 namespace nu
 { 
@@ -9,6 +10,13 @@ namespace nu
         float rotation;
         float scale;
     };
+
+    struct Transform3D
+    {
+        Vector3 position;
+        float rotation;
+        float scale;
+	};
 }
 
 

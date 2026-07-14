@@ -61,5 +61,14 @@
     <ClInclude Include="Actor.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

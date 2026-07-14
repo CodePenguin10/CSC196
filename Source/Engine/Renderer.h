@@ -21,8 +21,10 @@ namespace nu
 		void DrawFillRect(float x, float y, float w, float h) const;
 		void DrawRect(float x, float y, float w, float h) const;
 
-		int GetWidth() const { return m_width; }
-		int GetHeight() const { return m_height; }
+		void DrawModel(const class Model& model, const struct Transform& transform) const;
+
+		float GetWidth() const { return m_width; }
+		float GetHeight() const { return m_height; }
 
 
 		private:
