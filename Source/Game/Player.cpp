@@ -1,10 +1,10 @@
 #include "Player.h"
-#include "Renderer.h"
 #include "Engine.h"
+#include "Renderer.h"
+
 
 void Player::Update(float dt)
 {
-
 	nu::Vector2 force{ 0.0f, 0.0f };
 	if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_A)) force.x = -m_speed;
 	if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_D)) force.x = +m_speed;

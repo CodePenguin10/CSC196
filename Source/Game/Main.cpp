@@ -9,6 +9,7 @@ using namespace nu;
 int main()
 {
     // INITILALIZATION
+    
     engine.Initialize();
 
     nu::Mesh mesh{ { Vector2{-3, 3}, Vector2{3,3}, Vector2{0,0} }, Color{ 0.0f, 255.0f, 255.0f} };
