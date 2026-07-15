@@ -1,5 +1,5 @@
 #include "Engine.h"
-
+#include "Player.h"
 
 #include <iostream>
 #include <vector>
@@ -9,23 +9,11 @@ using namespace nu;
 int main()
 {
     // INITILALIZATION
-    Renderer renderer;
-    renderer.Initialize("Game Engine", 1280, 1024);
-
-    nu::Input input;
-
-    input.Initialize();
-
-    nu::Time time;
+    engine.Initialize();
 
     nu::Mesh mesh{ { Vector2{-3, 3}, Vector2{3,3}, Vector2{0,0} }, Color{ 0.0f, 255.0f, 255.0f} };
 
-
-    Actor player{ Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 50.0f }, std::vector<Mesh>{mesh} };
-
-    Vector2 position{ 640.0f, 512.0f };
-	Vector2 velocity{ 0.0f, 0.0f };
-    float speed = 1000.0f;
+    Player player{ Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 50.0f }, std::vector<Mesh>{mesh} };
 
     std::vector<Vector2> points;
 
@@ -46,63 +34,57 @@ int main()
         }
 
         // ENGINE
-        input.Update();
-        time.Tick();
+        engine.Update();
 
-        if (input.GetButtonDown(Input::MouseButtons::Left))
+        player.SetRotation(player.GetTransform().rotation + (90.0f * engine.GetTime().GetDeltaTime()));
+
+        player.Update(engine.GetTime().GetDeltaTime());
+
+        if (engine.GetInput().GetButtonDown(Input::MouseButtons::Left))
         {
             if (points.empty()) 
             {
-				points.push_back(input.GetMousePosition()); 
+				points.push_back(engine.GetInput().GetMousePosition());
             }
             else
             { 
-                Vector2 v = points.back() - input.GetMousePosition();
+                Vector2 v = points.back() - engine.GetInput().GetMousePosition();
 
                 if (v.Length() > 10.0f)
                 {
-                    points.push_back(input.GetMousePosition());
+                    points.push_back(engine.GetInput().GetMousePosition());
                 }
             }
             
         }
 
         //Undo
-        if (input.GetButtonPressed(Input::MouseButtons::Right))
+        if (engine.GetInput().GetButtonPressed(Input::MouseButtons::Right))
         {
             if (points.empty()) {
                 points.pop_back();
             }
 		}
-
-        Vector2 force{ 0.0f, 0.0f };
-		if (input.GetKeyDown(SDL_SCANCODE_A)) force.x = -speed;
-		if (input.GetKeyDown(SDL_SCANCODE_D)) force.x = +speed;
-		if (input.GetKeyDown(SDL_SCANCODE_W)) force.y = -speed;
-		if (input.GetKeyDown(SDL_SCANCODE_S)) force.y = +speed;
-
-        player.SetVelocity(player.GetVelocity() + (force * time.GetDeltaTime()));
-
-        player.Update(time.GetDeltaTime());
+		
 
         // RENDER
-        renderer.SetColor(0.0f, 0.0f, 0.0f);
-		renderer.Clear();
+        engine.GetRenderer().SetColor(0.0f, 0.0f, 0.0f);
+		engine.GetRenderer().Clear();
 
         for (size_t i = 0; i + 1 < points.size(); i++)
         {
-			renderer.SetColor(0.0f, 255.0f, 255.0f);
-			renderer.DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
+			engine.GetRenderer().SetColor(0.0f, 255.0f, 255.0f);
+			engine.GetRenderer().DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
         }
 
         // CHARACTER
-        player.Draw(renderer);
+        player.Draw(engine.GetRenderer());
         
-	    renderer.Present();
+	    engine.GetRenderer().Present();
     }
 
     // SHUTDOWN
-	renderer.Shutdown();
+    engine.Shutdown();
 
     return 0;
 }
