@@ -1,5 +1,6 @@
 #include "Engine.h"
 #include "Player.h"
+#include "Enemy.h"
 
 #include <iostream>
 #include <vector>
@@ -12,9 +13,31 @@ int main()
     
     engine.Initialize();
 
-    nu::Mesh mesh{ { Vector2{-3, 3}, Vector2{3,3}, Vector2{0,0} }, Color{ 0.0f, 255.0f, 255.0f} };
+    Mesh mesh{ { { 2, 0 }, { 1, -1 }, { -1, -1 }, { -2, -2 }, { -2, -1 }, { -1, -1 }, { -2, -1 }, { -2, 1 }, { -2, 2 }, { -1, 1 }, { -2, 1 }, { 1, 1 }, { 2, 0 } }, Color{ 0.0f, 255.0f, 255.0f} };
+    Model model{ std::vector<Mesh>{ mesh } };
+    Scene scene;
 
-    Player player{ Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 50.0f }, std::vector<Mesh>{mesh} };
+    PlayerDesc playerDesc;
+    playerDesc.name = "Player";
+    playerDesc.model = model;
+    playerDesc.transform = Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 50.0f };
+    playerDesc.speed = 1000.0f;
+
+    Player* player = new Player{ playerDesc };
+    scene.AddActor(player);
+
+   for (int i = 0; i < 20; i++) 
+    {
+       EnemyDesc enemyDesc;
+       enemyDesc.name = "Enemy";
+       enemyDesc.model = model;
+       enemyDesc.transform = Transform{ Vector2{ RandomFloat(0.0f, 1280.0f), RandomFloat(0.0f, 1024.0f)}, 0.0f, 50.0f };
+       enemyDesc.speed = 1000.0f;
+
+       Enemy* enemy = new Enemy{ enemyDesc };
+       scene.AddActor(enemy);
+    }
+
 
     std::vector<Vector2> points;
 
@@ -36,10 +59,13 @@ int main()
 
         // ENGINE
         engine.Update();
+        float dt = engine.GetTime().GetDeltaTime();
 
-        player.SetRotation(player.GetTransform().rotation + (90.0f * engine.GetTime().GetDeltaTime()));
+        //player.SetRotation(player.GetTransform().rotation + (90.0f * engine.GetTime().GetDeltaTime()));
+        //player.Update(dt);
+        //enemy.Update(dt);
 
-        player.Update(engine.GetTime().GetDeltaTime());
+        scene.Update(dt);
 
         if (engine.GetInput().GetButtonDown(Input::MouseButtons::Left))
         {
@@ -79,7 +105,9 @@ int main()
         }
 
         // CHARACTER
-        player.Draw(engine.GetRenderer());
+        //player.Draw(engine.GetRenderer());
+        //enemy.Draw(engine.GetRenderer());
+        scene.Draw(engine.GetRenderer());
         
 	    engine.GetRenderer().Present();
     }

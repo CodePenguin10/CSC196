@@ -2,21 +2,31 @@
 #include "Engine.h"
 #include "Renderer.h"
 
+using namespace nu;
 
 void Player::Update(float dt)
 {
-	nu::Vector2 force{ 0.0f, 0.0f };
-	if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_A)) force.x = -m_speed;
-	if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_D)) force.x = +m_speed;
-	if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_W)) force.y = -m_speed;
-	if (nu::engine.GetInput().GetKeyDown(SDL_SCANCODE_S)) force.y = +m_speed;
+	float thrust = 0.0f;
 
-	SetVelocity(GetVelocity() + (force * dt));
+	if (engine.GetInput().GetKeyDown(SDL_SCANCODE_W)) thrust = m_speed;
+	if (engine.GetInput().GetKeyDown(SDL_SCANCODE_S)) thrust = -m_speed;
+
+	float rotate = 0.0f;
+	if (engine.GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -180.0f;
+    if (engine.GetInput().GetKeyDown(SDL_SCANCODE_D)) rotate = +180.0f;
+
+	SetRotation(m_transform.rotation + rotate * dt);
+
+	nu::Vector2 velocity{ 1, 0 };
+	velocity = velocity.Rotate(m_transform.rotation * DegToRad) * thrust;
+	AddVelocity(velocity * dt);
+
+	//SetVelocity(GetVelocity() + (force * dt));
 
 	Actor::Update(dt);
 }
 
-void Player::Draw(const nu::Renderer& renderer)
+void Player::Draw(const Renderer& renderer)
 {
 	Actor::Draw(renderer);
 }
