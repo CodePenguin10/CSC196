@@ -13,14 +13,16 @@ int main()
     
     engine.Initialize();
 
-    Mesh mesh{ { { 2, 0 }, { 1, -1 }, { -1, -1 }, { -2, -2 }, { -2, -1 }, { -1, -1 }, { -2, -1 }, { -2, 1 }, { -2, 2 }, { -1, 1 }, { -2, 1 }, { 1, 1 }, { 2, 0 } }, Color{ 0.0f, 255.0f, 255.0f} };
-    Model model{ std::vector<Mesh>{ mesh } };
+    Mesh mesh{ { { 2, 0 }, { 1, -1 }, { -2, -1 }, { -2, 1 }, { 1, 1 }, { 2, 0 } }, Color{ 1.0f, 1.0f, 1.0f} };
+    Mesh mesh2{ { { -1, -1 }, { -2, -2 }, { -2, -1 } }, Color { 1.0f, 0.0f, 0.0f} };
+    Mesh mesh3{ { { -1, 1 }, { -2, 2 }, { -2, 1 }, }, Color { 1.0f, 0.0f, 0.0f} };
+    Model model{ std::vector<Mesh>{ mesh, mesh2, mesh3 } };
     Scene scene;
 
     PlayerDesc playerDesc;
     playerDesc.name = "Player";
     playerDesc.model = model;
-    playerDesc.transform = Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 50.0f };
+    playerDesc.transform = Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 25.0f };
     playerDesc.speed = 1000.0f;
 
     Player* player = new Player{ playerDesc };
@@ -31,7 +33,7 @@ int main()
        EnemyDesc enemyDesc;
        enemyDesc.name = "Enemy";
        enemyDesc.model = model;
-       enemyDesc.transform = Transform{ Vector2{ RandomFloat(0.0f, 1280.0f), RandomFloat(0.0f, 1024.0f)}, 0.0f, 50.0f };
+       enemyDesc.transform = Transform{ Vector2{ RandomFloat(0.0f, 1280.0f), RandomFloat(0.0f, 1024.0f)}, 0.0f, 25.0f };
        enemyDesc.speed = 1000.0f;
 
        Enemy* enemy = new Enemy{ enemyDesc };
