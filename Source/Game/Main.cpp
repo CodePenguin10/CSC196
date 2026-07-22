@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Assets.h"
 
 #include <iostream>
 #include <vector>
@@ -10,18 +11,14 @@ using namespace nu;
 int main()
 {
     // INITILALIZATION
-    
-    engine.Initialize();
+    Engine::Get().Initialize();
 
-    Mesh mesh{ { { 2, 0 }, { 1, -1 }, { -2, -1 }, { -2, 1 }, { 1, 1 }, { 2, 0 } }, Color{ 1.0f, 1.0f, 1.0f} };
-    Mesh mesh2{ { { -1, -1 }, { -2, -2 }, { -2, -1 } }, Color { 1.0f, 0.0f, 0.0f} };
-    Mesh mesh3{ { { -1, 1 }, { -2, 2 }, { -2, 1 }, }, Color { 1.0f, 0.0f, 0.0f} };
-    Model model{ std::vector<Mesh>{ mesh, mesh2, mesh3 } };
+    // mesh / model
     Scene scene;
 
     PlayerDesc playerDesc;
     playerDesc.name = "Player";
-    playerDesc.model = model;
+    playerDesc.model = assets::playerModel;
     playerDesc.transform = Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 25.0f };
     playerDesc.speed = 1000.0f;
 
@@ -32,7 +29,7 @@ int main()
     {
        EnemyDesc enemyDesc;
        enemyDesc.name = "Enemy";
-       enemyDesc.model = model;
+       enemyDesc.model = assets::enemyModel;
        enemyDesc.transform = Transform{ Vector2{ RandomFloat(0.0f, 1280.0f), RandomFloat(0.0f, 1024.0f)}, 0.0f, 25.0f };
        enemyDesc.speed = 1000.0f;
 
@@ -60,35 +57,35 @@ int main()
         }
 
         // ENGINE
-        engine.Update();
-        float dt = engine.GetTime().GetDeltaTime();
+        Engine::Get().Update();
+        float dt = Engine::Get().GetTime().GetDeltaTime();
 
-        //player.SetRotation(player.GetTransform().rotation + (90.0f * engine.GetTime().GetDeltaTime()));
+        //player.SetRotation(player.GetTransform().rotation + (90.0f * Engine::Get().GetTime().GetDeltaTime()));
         //player.Update(dt);
         //enemy.Update(dt);
 
         scene.Update(dt);
 
-        if (engine.GetInput().GetButtonDown(Input::MouseButtons::Left))
+        if (Engine::Get().GetInput().GetButtonDown(Input::MouseButtons::Left))
         {
             if (points.empty()) 
             {
-				points.push_back(engine.GetInput().GetMousePosition());
+				points.push_back(Engine::Get().GetInput().GetMousePosition());
             }
             else
             { 
-                Vector2 v = points.back() - engine.GetInput().GetMousePosition();
+                Vector2 v = points.back() - Engine::Get().GetInput().GetMousePosition();
 
                 if (v.Length() > 10.0f)
                 {
-                    points.push_back(engine.GetInput().GetMousePosition());
+                    points.push_back(Engine::Get().GetInput().GetMousePosition());
                 }
             }
             
         }
 
         //Undo
-        if (engine.GetInput().GetButtonPressed(Input::MouseButtons::Right))
+        if (Engine::Get().GetInput().GetButtonPressed(Input::MouseButtons::Right))
         {
             if (points.empty()) {
                 points.pop_back();
@@ -97,25 +94,25 @@ int main()
 		
 
         // RENDER
-        engine.GetRenderer().SetColor(0.0f, 0.0f, 0.0f);
-		engine.GetRenderer().Clear();
+        Engine::Get().GetRenderer().SetColor(0.0f, 0.0f, 0.0f);
+		Engine::Get().GetRenderer().Clear();
 
         for (size_t i = 0; i + 1 < points.size(); i++)
         {
-			engine.GetRenderer().SetColor(0.0f, 255.0f, 255.0f);
-			engine.GetRenderer().DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
+			Engine::Get().GetRenderer().SetColor(0.0f, 255.0f, 255.0f);
+			Engine::Get().GetRenderer().DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
         }
 
         // CHARACTER
-        //player.Draw(engine.GetRenderer());
-        //enemy.Draw(engine.GetRenderer());
-        scene.Draw(engine.GetRenderer());
+        //player.Draw(Engine::Get().GetRenderer());
+        //enemy.Draw(Engine::Get().GetRenderer());
+        scene.Draw(Engine::Get().GetRenderer());
         
-	    engine.GetRenderer().Present();
+	    Engine::Get().GetRenderer().Present();
     }
 
     // SHUTDOWN
-    engine.Shutdown();
+    Engine::Get().Shutdown();
 
     return 0;
 }

@@ -1,5 +1,5 @@
 #pragma once
-
+//Creation
 #include "Random.h"
 #include "Vector2.h"
 #include "Vector3.h"
@@ -20,7 +20,7 @@ namespace nu
 	class Engine
 	{
 	public:
-		Engine() = default;
+		static Engine& Get() { static Engine engine; return engine; }
 
 		bool Initialize();
 		void Shutdown();
@@ -31,12 +31,15 @@ namespace nu
 		Renderer& GetRenderer() { return m_renderer; }
 		Time& GetTime() { return m_time; }
 
+		Engine(const Engine&) = delete;
+		Engine& operator = (const Engine&) = delete;
+
 	private:
+		Engine() = default;
+
 		Input m_input;
 		Renderer m_renderer;
 
 		Time m_time;
 	};
-
-	extern Engine engine;
 }
