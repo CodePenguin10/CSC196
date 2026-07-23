@@ -5,11 +5,20 @@
 
 #include <iostream>
 #include <vector>
+#include <fmod.hpp>
 
 using namespace nu;
 
 int main()
 {
+    // create audio system
+    FMOD::System* audio;
+    FMOD::System_Create(&audio);
+
+    void* extradriverdata = nullptr;
+    audio->init(32, FMOD_INIT_NORMAL, extradriverdata);
+
+
     // INITILALIZATION
     Engine::Get().Initialize();
 
@@ -40,6 +49,11 @@ int main()
 
     std::vector<Vector2> points;
 
+    FMOD::Sound* sound = nullptr;
+    audio->createSound("test.wav", FMOD_DEFAULT, 0, &sound);
+
+    audio->playSound(sound, 0, false, nullptr);
+
     // MAIN LOOP
     bool quit = false;
 
@@ -56,9 +70,11 @@ int main()
 			}
         }
 
+
         // ENGINE
         Engine::Get().Update();
         float dt = Engine::Get().GetTime().GetDeltaTime();
+        audio->update();
 
         //player.SetRotation(player.GetTransform().rotation + (90.0f * Engine::Get().GetTime().GetDeltaTime()));
         //player.Update(dt);
