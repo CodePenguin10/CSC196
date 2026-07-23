@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Assets.h"
+#include "Bullet.h"
 
 #include <iostream>
 #include <vector>
@@ -29,6 +30,7 @@ int main()
     playerDesc.name = "Player";
     playerDesc.model = assets::playerModel;
     playerDesc.transform = Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 25.0f };
+    playerDesc.damping = 0.75f;
     playerDesc.speed = 1000.0f;
 
     Player* player = new Player{ playerDesc };
@@ -40,7 +42,8 @@ int main()
        enemyDesc.name = "Enemy";
        enemyDesc.model = assets::enemyModel;
        enemyDesc.transform = Transform{ Vector2{ RandomFloat(0.0f, 1280.0f), RandomFloat(0.0f, 1024.0f)}, 0.0f, 25.0f };
-       enemyDesc.speed = 1000.0f;
+       enemyDesc.damping = 0.75f;
+       enemyDesc.speed = RandomFloat(750.0f, 1000.0f);
 
        Enemy* enemy = new Enemy{ enemyDesc };
        scene.AddActor(enemy);

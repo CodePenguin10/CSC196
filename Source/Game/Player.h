@@ -15,7 +15,6 @@ public:
         Player(const nu::Transform& transform, const nu::Model& model) : Actor{ transform, model } {}
 
         void Update(float dt) override;
-        void Draw(const class nu::Renderer& renderer) override;
 
 private:
     int ammo = 0;

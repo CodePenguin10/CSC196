@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "Bullet.h"
+#include "Assets.h"
 #include "Engine.h"
 #include "Renderer.h"
 
@@ -23,10 +25,19 @@ void Player::Update(float dt)
 
 	//SetVelocity(GetVelocity() + (force * dt));
 
-	Actor::Update(dt);
-}
+	if (Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_SPACE))
+	{
+		BulletDesc Desc;
+		Desc.name = "Enemy";
+		Desc.tag = "Bullet";
+		Desc.model = assets::bulletModel;
+		Desc.transform = m_transform;
+		Desc.speed = 1500.0f;
+		Desc.lifespan = 1.5f;
 
-void Player::Draw(const Renderer& renderer)
-{
-	Actor::Draw(renderer);
+		Bullet* bullet = new Bullet{ Desc };
+		m_scene->AddActor(bullet);
+	}
+
+	Actor::Update(dt);
 }
